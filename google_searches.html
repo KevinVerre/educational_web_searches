@@ -1,0 +1,125 @@
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+<body onload="initialize_page();">
+	<script>
+		var categories = 
+		[
+			[
+				"How things work",
+				[
+					"How does a faucet work?",
+					"How does a toilet work?",
+					"How does a light bulb work?",
+					"How does power steering work?",
+					"How does a combustion engine work?",
+					"How do cell phones work?",
+					"How do microwaves work?"
+				]
+			],
+			[
+				"Computer Stuff",
+				[
+					"How does Google work?",
+					"How does the Internet work?",
+					"How do wireless routers work?",
+					"How do patches work?",
+					"How do operating systems work?",
+					"How does a computer boot?"
+				]
+			],
+			[
+				"Programming",
+				[
+					"Keyboard shortcuts for Sublime Text",
+					"VIM keyboard shortcuts and commands",
+					"Git cheat sheet",
+					"Ruby cheat sheet",
+					"JavaScript cheat sheet",
+					"Python cheat sheet",
+					"Java cheat sheet",
+					"What is Ember.js?",
+					"What is NoSQL?",
+					"What is Ruby on Rails?",
+					"What is Node.js?",
+					"What is jQuery?",
+					"What is Angular.js?",
+					"What is Swift?",
+					"MySQL vs PostGres",
+					"bash scripting cheat sheet",
+					"Machine learning in Python",
+					"Machine learning in Ruby",
+					"Machine learning in Rails",
+					"What is the RPM? Ruby Package Manager"
+				]
+			]
+		];
+
+	</script>
+
+
+
+	<center style="background-color: #38ede1; padding-bottom: 10px">
+		<h3><br/>KevSchool.org presents...</h3>
+		<h1>The KevSchool List of Educational Google Searches</h1>
+	</center>
+	<br/>
+	<center>
+		<div id="parent-div">
+			
+		</div>
+	</center>
+	<div id="hidden-div" hidden>
+		<div class="link-container">
+			<a class="link-anchor" href="" target="_blank"></a>
+		</div>
+		<div class="category-container">
+			<h3 class="category-name-header"></h3>
+		</div>
+	</div>
+	<br/><br/><br/><br/>
+
+	<script>
+		function initialize_page(){
+			// for every query
+				// generate the URL
+				// display the query and URL link on the page
+			var link_counter = 0;
+			for (var cat = 0; cat < categories.length; cat++){
+				var category_title = categories[cat][0];
+				var queries = categories[cat][1];
+
+				var parent_div = $('#parent-div');
+				var dummy_category_div = $('#hidden-div .category-container').clone();
+				dummy_category_div.find('.category-name-header').html(category_title);
+				parent_div.append(dummy_category_div);
+
+				for (var i = 0; i < queries.length; i++){
+
+					var curQuery = queries[i];
+					if (!curQuery || curQuery == "") { continue; }
+					var googleURL = convert_string_google_url(curQuery);
+					// copy hidden div
+					var parent_div = $('#parent-div');
+					var numStr = (link_counter + 1)+". ";
+					var dummy_link_div = $('#hidden-div .link-container').clone();
+					dummy_link_div.find('.link-anchor').html(numStr + curQuery);
+					dummy_link_div.find('.link-anchor').attr('href', googleURL);
+					parent_div.append(dummy_link_div);
+					link_counter += 1;
+				}
+			}
+		}
+		function convert_string_google_url(query){
+			var retVal = "https://www.google.com/search?q=";
+			url_encoded_query = encodeURI(query);
+			retVal = retVal + url_encoded_query;
+			return retVal;
+		}
+	</script>
+
+</body>
+</html>
